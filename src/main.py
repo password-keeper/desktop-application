@@ -14,25 +14,25 @@ class Main(QWidget):
         self.setWindowTitle("Password Manager")
         self.setFixedSize(600, 300)
     def initUI(self):
-        group1 = QGroupBox("Kayıt Ol")
+        group1 = QGroupBox("Sign up")
         self.name = QLineEdit()
         self.lastname = QLineEdit()
         self.email = QLineEdit()
         self.sifre = QLineEdit()
-        self.buton = QPushButton("Kayıt Ol")
+        self.buton = QPushButton("Sign up")
 
-        group2 = QGroupBox("Oturum Aç")
+        group2 = QGroupBox("Log in")
         self.email2 = QLineEdit()
         self.sifre2 = QLineEdit()
-        self.buton2 = QPushButton("Oturum Aç")
+        self.buton2 = QPushButton("Log in")
 
-        self.name.setPlaceholderText("İsim")
-        self.lastname.setPlaceholderText("Soyisim")
-        self.email.setPlaceholderText("E-posta")
-        self.sifre.setPlaceholderText("Şifre")
+        self.name.setPlaceholderText("Name")
+        self.lastname.setPlaceholderText("Lastname")
+        self.email.setPlaceholderText("E-mail")
+        self.sifre.setPlaceholderText("Password")
         self.sifre.setEchoMode(QLineEdit.Password)
-        self.email2.setPlaceholderText("E-posta")
-        self.sifre2.setPlaceholderText("Şifre")
+        self.email2.setPlaceholderText("E-mail")
+        self.sifre2.setPlaceholderText("Password")
         self.sifre2.setEchoMode(QLineEdit.Password)
 
         ml = QHBoxLayout()
@@ -66,23 +66,23 @@ class Main(QWidget):
 
     def kayit(self):
         if self.name.text() == "" or self.lastname.text() == "" or self.email.text() == "" or self.sifre.text() == "":
-            QMessageBox.critical(self, "Password Manager", "Lütfen tüm boşlukları doldurunuz.")
+            QMessageBox.critical(self, "Password Manager", "Please fill the all blanks.")
         else:
             a = api.signup(self.name.text(), self.lastname.text(), self.email.text(), self.sifre.text())
             if a == False:
-                QMessageBox.critical(self, "Password Manager", "Hesap oluşturulamadı.")
+                QMessageBox.critical(self, "Password Manager", "Sign up failed.")
             else:
-                QMessageBox.information(self, "Password Manager", "Hesap başarıyla oluşturuldu.")
+                QMessageBox.information(self, "Password Manager", "Sign up was successful.")
 
     def oturum(self):
         if self.email2.text() == "" or self.sifre2.text() == "":
-            QMessageBox.critical(self, "Password Manager", "Lütfen tüm boşlukları doldurunuz.")
+            QMessageBox.critical(self, "Password Manager", "Please fill the all blanks.")
         else:
             a = api.login(self.email2.text(), self.sifre2.text())
             if a == False:
-                QMessageBox.critical(self, "Password Manager", "Giriş yapılamadı.")
+                QMessageBox.critical(self, "Password Manager", "Log in failed.")
             else:
-                QMessageBox.information(self, "Password Manager", "Giriş başarıyla gerçekleşti.")
+                QMessageBox.information(self, "Password Manager", "Log in was successful.")
                 globals()['token'] = a
                 self.login = Sifreler()
                 self.login.show()
@@ -92,16 +92,16 @@ class SifreEkle(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.setWindowTitle("Password Manager - Şifre Ekle")
+        self.setWindowTitle("Password Manager - Add Password")
         self.setFixedSize(500, 200)
     def initUI(self):
         self.isim = QLineEdit()
-        self.isim.setPlaceholderText("Şifre ismi")
+        self.isim.setPlaceholderText("Password Name")
         self.sifre = QLineEdit()
-        self.sifre.setPlaceholderText("Şifre")
+        self.sifre.setPlaceholderText("Password")
         rastbuton = QPushButton("🎲")
         rastbuton.setStyleSheet("padding: 9px")
-        buton = QPushButton("Tamam")
+        buton = QPushButton("Submit")
         self.text = QLabel()
 
         hb = QHBoxLayout()
@@ -123,13 +123,13 @@ class SifreEkle(QWidget):
 
     def ekle(self):
         if self.isim.text() == "" or self.sifre.text() == "":
-            QMessageBox.critical(self, "Password Manager", "Lütfen tüm boşlukları doldurunuz.")
+            QMessageBox.critical(self, "Password Manager", "Please fill the all blanks.")
         else:
             a = api.addPassword(token, self.isim.text(), self.sifre.text())
             if a == True:
-                QMessageBox.information(self, "Password Manager", "Şifre başarıyla eklendi.")
+                QMessageBox.information(self, "Password Manager", "Password successfully added.")
             else:
-                QMessageBox.critical(self, "Password Manager", "Şifre eklenilemedi.")
+                QMessageBox.critical(self, "Password Manager", "Couldn't add password.")
 
     def randomg(self):
         rastgele = ''.join(choices(ascii_lowercase + ascii_uppercase + digits, k = 16))
@@ -139,16 +139,16 @@ class SifreDuzenle(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.setWindowTitle("Password Manager - Şifre Düzenle")
+        self.setWindowTitle("Password Manager - Edit Password")
         self.setFixedSize(500, 200)
     def initUI(self):
         self.isim1 = QLineEdit()
-        self.isim1.setPlaceholderText("Eski şifre ismi")
+        self.isim1.setPlaceholderText("Old Password Name")
         self.isim = QLineEdit()
-        self.isim.setPlaceholderText("Şifre ismi")
+        self.isim.setPlaceholderText("New Password Name")
         self.sifre = QLineEdit()
-        self.sifre.setPlaceholderText("Şifre")
-        buton = QPushButton("Tamam")
+        self.sifre.setPlaceholderText("New Password")
+        buton = QPushButton("Submit")
         self.text = QLabel()
 
         vb = QVBoxLayout()
@@ -166,24 +166,24 @@ class SifreDuzenle(QWidget):
 
     def duzen(self):
         if self.isim.text() == "" or self.sifre.text() == "":
-            QMessageBox.critical(self, "Password Manager", "Lütfen tüm boşlukları doldurunuz.")
+            QMessageBox.critical(self, "Password Manager", "Please fill the all blanks.")
         else:
             a = api.editPassword(token, self.isim1.text() ,self.isim.text(), self.sifre.text())
             if a == True:
-                QMessageBox.information(self, "Password Manager", "Şifre başarıyla düzenlendi.")
+                QMessageBox.information(self, "Password Manager", "Password set successfully.")
             else:
-                QMessageBox.critical(self, "Password Manager", "Şifre düzenlenilemedi.")
+                QMessageBox.critical(self, "Password Manager", "Couldn't edit password.")
 
 class SifreSil(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.setWindowTitle("Password Manager - Şifre Sil")
+        self.setWindowTitle("Password Manager - Delete Password")
         self.setFixedSize(500, 100)
     def initUI(self):
         self.isim = QLineEdit()
-        self.isim.setPlaceholderText("Şifre ismi")
-        buton = QPushButton("Tamam")
+        self.isim.setPlaceholderText("Password Name")
+        buton = QPushButton("Submit")
         self.text = QLabel()
 
         vb = QVBoxLayout()
@@ -199,13 +199,13 @@ class SifreSil(QWidget):
 
     def sil(self):
         if self.isim.text() == "":
-            QMessageBox.critical(self, "Password Manager", "Lütfen tüm boşlukları doldurunuz.")
+            QMessageBox.critical(self, "Password Manager", "Please fill the all blanks.")
         else:
             a = api.deletePassword(token, self.isim.text())
             if a == True:
-                QMessageBox.information(self, "Password Manager", "Şifre başarıyla silindi.")
+                QMessageBox.information(self, "Password Manager", "Password deleted successfully.")
             else:
-                QMessageBox.critical(self, "Password Manager", "Şifre silinemedi.")
+                QMessageBox.critical(self, "Password Manager", "Couldn't delete password.")
 
 class Sifreler(QWidget):
     def __init__(self):
@@ -218,7 +218,7 @@ class Sifreler(QWidget):
         buton = QPushButton("+")
         buton2 = QPushButton("⟳")
         buton3 = QPushButton("-")
-        buton4 = QPushButton("Yenile")
+        buton4 = QPushButton("Refresh")
 
         hb = QHBoxLayout()
         hb.addWidget(buton)
@@ -243,7 +243,7 @@ class Sifreler(QWidget):
         self.yenile()
 
     def test(self, item):
-        QMessageBox.information(self, "Password Manager", f"Şifre ismi: {item.text()}\nŞifre: {api.getPasswordByName(token, item.text())}")
+        QMessageBox.information(self, "Password Manager", f"Password Name: {item.text()}\nPassword: {api.getPasswordByName(token, item.text())}")
     
     def ekle(self):
         self.ekle = SifreEkle()
@@ -264,7 +264,7 @@ class Sifreler(QWidget):
             for i in passwords:
                 self.liste.addItem(i)
         except:
-            self.liste.addItem("Burası tertemiz.")
+            self.liste.addItem("Clean.")
 
 app = QApplication(argv)
 app.setApplicationName("Password Manager")
