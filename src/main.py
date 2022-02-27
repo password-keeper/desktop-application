@@ -267,10 +267,6 @@ class Sifreler(QWidget):
             self.liste.addItem("Clean.")
 
 app = QApplication(argv)
-app.setApplicationName("Password Manager")
-app.setApplicationDisplayName("Password Manager")
-app.setOrganizationName("larei&forcex")
-app.setApplicationVersion("0.1")
 w = Main()
 w.show()
 app.exec()
