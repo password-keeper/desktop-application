@@ -118,7 +118,7 @@ class SifreEkle(QWidget):
         rastbuton.clicked.connect(self.randomg)
 
         self.setLayout(vb)
-        self.setStyleSheet(qss).read()
+        self.setStyleSheet(qss)
         self.show()
 
     def ekle(self):
