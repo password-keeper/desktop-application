@@ -271,4 +271,4 @@ w = Main()
 w.show()
 app.exec()
 
-# larei & forcex was here
+# larei was here
